@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setError, setStatus } from '../../services/reducersService';
+import { setError, setStatus } from '../../service/reducerService';
 import api from '../../api';
 
 const SLICE_NAME = 'users';
@@ -10,20 +10,36 @@ const initialState = {
   error: null,
 };
 
+// export const getAllUsers = createAsyncThunk(
+//   `${SLICE_NAME}/getAllUsers`,
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const { data, status } = await api.get(`${SLICE_NAME}`);
+//       if (status >= 400) {
+//         throw new Error(`Error geting users is ${status}`);
+//       }
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   },
+// );
+
 export const getAllUsers = createAsyncThunk(
   `${SLICE_NAME}/getAllUsers`,
   async (_, { rejectWithValue }) => {
     try {
-      const { data, status } = await api.get(`${SLICE_NAME}`);
-      if (status >= 400) {
-        throw new Error(`Error geting users is ${status}`);
+      const response = await api.get(`/${SLICE_NAME}`);
+      if (response.status >= 400) {
+        throw new Error(`Error geting users is ${response.status}`);
       }
-      return data;
+      return response.data.users;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   },
 );
+
 
 const usersSlice = createSlice({
   name: SLICE_NAME,

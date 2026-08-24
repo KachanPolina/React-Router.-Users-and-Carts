@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { logger } from "redux-logger";
-import usersReducer from './slices/userSlice';
+import usersReducer from './slices/usersSlice';
 // import albumsReducer from './slices/albumSlice';
 // import photosReducer from './slices/photosSlice';
 
