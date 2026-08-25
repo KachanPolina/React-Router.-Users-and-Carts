@@ -25,6 +25,21 @@ export const getCartsProducts = createAsyncThunk(
   },
 );
 
+export const getUsersProducts = createAsyncThunk(
+  `${SLICE_NAME}/getUsersProducts`,
+  async (userId, {rejectWithValue}) => {
+    try {
+      const {data, status} = await api.get(`/carts/user/${userId}`) 
+      if (status >= 400) {
+        throw new Error('Something went wrong with geting users products');
+      }
+      return data.carts[0].products;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
 
 const cartsSlice = createSlice({
   name: SLICE_NAME,
@@ -37,6 +52,15 @@ const cartsSlice = createSlice({
     });
     builder.addCase(getCartsProducts.pending, setStatus);
     builder.addCase(getCartsProducts.rejected, setError);
+
+
+    builder.addCase(getUsersProducts.fulfilled, (state, { payload }) => {
+      state.products = payload;
+      state.status = 'fulfilled';
+      state.error = null;
+    });
+    builder.addCase(getUsersProducts.pending, setStatus);
+    builder.addCase(getUsersProducts.rejected, setError);
 
   },
 });
