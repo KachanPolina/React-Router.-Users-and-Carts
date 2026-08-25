@@ -11,7 +11,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import BurstModeIcon from '@mui/icons-material/BurstMode'; // components
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';// components
 import Carts from './components/carts/Carts';
 import Users from './components/users/Users';
 // css
@@ -24,7 +24,7 @@ function App() {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position='static'>
             <Toolbar>
-              <BurstModeIcon />
+              <ShoppingCartIcon />
               <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                 Carts Products Manager
               </Typography>
@@ -48,9 +48,7 @@ function App() {
       </div>
 
       <Routes>
-        <Route path='/' exact>
-          hjjhhhjhhjh
-        </Route>
+        <Route path='/' element={<div>Ласкаво просимо на головну сторінку!</div>} />
         <Route path='/carts/*' element={<Carts />} />
         <Route path='/users/*' element={<Users />} />
         <Route from='*' element={<Navigate to={'/'} />} />

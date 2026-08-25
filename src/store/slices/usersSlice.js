@@ -10,36 +10,35 @@ const initialState = {
   error: null,
 };
 
-// export const getAllUsers = createAsyncThunk(
-//   `${SLICE_NAME}/getAllUsers`,
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const { data, status } = await api.get(`${SLICE_NAME}`);
-//       if (status >= 400) {
-//         throw new Error(`Error geting users is ${status}`);
-//       }
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   },
-// );
-
 export const getAllUsers = createAsyncThunk(
   `${SLICE_NAME}/getAllUsers`,
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/${SLICE_NAME}`);
-      if (response.status >= 400) {
-        throw new Error(`Error geting users is ${response.status}`);
+      const {data, status} = await api.get(`/${SLICE_NAME}`);
+      if (status >= 400) {
+        throw new Error(`Error geting users is ${status}`);
       }
-      return response.data.users;
+      return data.users;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   },
 );
 
+export const deleteUser = createAsyncThunk(
+  `${SLICE_NAME}/deleteUser`,
+  async (id, { rejectWithValue }) => {
+    try {
+      const { status } = await api.delete(`/${SLICE_NAME}/${id}`);
+      if (status >= 400) {
+        throw new Error(`Error update user is ${status}`);
+      }
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 const usersSlice = createSlice({
   name: SLICE_NAME,
@@ -63,23 +62,23 @@ const usersSlice = createSlice({
     //   state.status = 'fulfilled';
     //   state.error = null;
     // });
-    // builder.addCase(deleteUser.fulfilled, (state, { payload }) => {
-    //   state.users = state.users.filter((user) => user.id !== payload);
-    //   state.status = 'fulfilled';
-    //   state.error = null;
-    // });
+    builder.addCase(deleteUser.fulfilled, (state, { payload }) => {
+      state.users = state.users.filter((user) => user.id !== payload);
+      state.status = 'fulfilled';
+      state.error = null;
+    });
 
     // Panding
     builder.addCase(getAllUsers.pending, setStatus);
     // builder.addCase(createUser.pending, setStatus);
     // builder.addCase(updateUser.pending, setStatus);
-    // builder.addCase(deleteUser.pending, setStatus);
+    builder.addCase(deleteUser.pending, setStatus);
 
     // Reject
     builder.addCase(getAllUsers.rejected, setError);
     // builder.addCase(createUser.rejected, setError);
     // builder.addCase(updateUser.rejected, setError);
-    // builder.addCase(deleteUser.rejected, setError);
+    builder.addCase(deleteUser.rejected, setError);
   },
 });
 

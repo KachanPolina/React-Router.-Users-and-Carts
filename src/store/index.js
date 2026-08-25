@@ -1,14 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { logger } from "redux-logger";
 import usersReducer from './slices/usersSlice';
-// import albumsReducer from './slices/albumSlice';
-// import photosReducer from './slices/photosSlice';
+import cartsReducer from './slices/cartsSlice';
+import productsReducer from './slices/productsSlice';
+
 
 export default configureStore({
   reducer: {
     usersList: usersReducer,
-    // albumsList: albumsReducer,
-    // photosList: photosReducer,
+    cartsList: cartsReducer,
+    productsList: productsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 })
