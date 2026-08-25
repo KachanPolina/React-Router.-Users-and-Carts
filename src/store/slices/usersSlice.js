@@ -40,6 +40,21 @@ export const deleteUser = createAsyncThunk(
   },
 );
 
+export const updateUser = createAsyncThunk(
+  `${SLICE_NAME}/updateUser`,
+  async (user, {rejectWithValue}) => {
+    try {
+      const {status, data} = await api.put(`${SLICE_NAME}/${user.id}`, user);
+      if (status >= 400) {
+        throw new Error('Something went wrong with updating user');
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
 const usersSlice = createSlice({
   name: SLICE_NAME,
   initialState,
@@ -50,18 +65,13 @@ const usersSlice = createSlice({
       state.status = 'fulfilled';
       state.error = null;
     });
-    // builder.addCase(createUser.fulfilled, (state, { payload }) => {
-    //   state.users.push(payload);
-    //   state.status = 'fulfilled';
-    //   state.error = null;
-    // });
-    // builder.addCase(updateUser.fulfilled, (state, { payload }) => {
-    //   state.users = state.users.map((user) => {
-    //     return user.id === payload.id ? payload : user;
-    //   });
-    //   state.status = 'fulfilled';
-    //   state.error = null;
-    // });
+    builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      state.users = state.users.map((user) => {
+        return user.id === payload.id ? payload : user;
+      });
+      state.status = 'fulfilled';
+      state.error = null;
+    });
     builder.addCase(deleteUser.fulfilled, (state, { payload }) => {
       state.users = state.users.filter((user) => user.id !== payload);
       state.status = 'fulfilled';
@@ -70,14 +80,12 @@ const usersSlice = createSlice({
 
     // Panding
     builder.addCase(getAllUsers.pending, setStatus);
-    // builder.addCase(createUser.pending, setStatus);
-    // builder.addCase(updateUser.pending, setStatus);
+    builder.addCase(updateUser.pending, setStatus);
     builder.addCase(deleteUser.pending, setStatus);
 
     // Reject
     builder.addCase(getAllUsers.rejected, setError);
-    // builder.addCase(createUser.rejected, setError);
-    // builder.addCase(updateUser.rejected, setError);
+    builder.addCase(updateUser.rejected, setError);
     builder.addCase(deleteUser.rejected, setError);
   },
 });

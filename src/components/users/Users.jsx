@@ -1,8 +1,6 @@
 import {
-  // NavLink,
   Routes,
   Route,
-  // Navigate,
 } from 'react-router-dom';
 import UserForm from './UserForm/UserForm';
 import UserCarts from './UsersProducts/UsersProducts';
