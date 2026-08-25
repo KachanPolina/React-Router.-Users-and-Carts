@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCarts } from '../../../store/slices/cartsSlice';
 import { Link } from 'react-router-dom';
+import { getAllCarts } from '../../../store/slices/cartsSlice';
 
 function CartsList() {
   const dispatch = useDispatch();

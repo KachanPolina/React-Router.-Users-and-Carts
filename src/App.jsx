@@ -11,11 +11,10 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';// components
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// components
 import Carts from './components/carts/Carts';
 import Users from './components/users/Users';
-// css
-import './App.css';
 
 function App() {
   return (
@@ -48,7 +47,7 @@ function App() {
       </div>
 
       <Routes>
-        <Route path='/' element={<div>Ласкаво просимо на головну сторінку!</div>} />
+        <Route path='/' element={<div>Welcome to the home page!</div>} />
         <Route path='/carts/*' element={<Carts />} />
         <Route path='/users/*' element={<Users />} />
         <Route from='*' element={<Navigate to={'/'} />} />

@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setError, setStatus } from '../../service/reducerService';
 import api from '../../api';
+import { USERS_SLICE_NAME } from './slicesNames';
 
-const SLICE_NAME = 'users';
 
 const initialState = {
   users: [],
@@ -11,10 +11,10 @@ const initialState = {
 };
 
 export const getAllUsers = createAsyncThunk(
-  `${SLICE_NAME}/getAllUsers`,
+  `${USERS_SLICE_NAME}/getAllUsers`,
   async (_, { rejectWithValue }) => {
     try {
-      const {data, status} = await api.get(`/${SLICE_NAME}`);
+      const {data, status} = await api.get(`/${USERS_SLICE_NAME}`);
       if (status >= 400) {
         throw new Error(`Error geting users is ${status}`);
       }
@@ -25,26 +25,11 @@ export const getAllUsers = createAsyncThunk(
   },
 );
 
-export const deleteUser = createAsyncThunk(
-  `${SLICE_NAME}/deleteUser`,
-  async (id, { rejectWithValue }) => {
-    try {
-      const { status } = await api.delete(`/${SLICE_NAME}/${id}`);
-      if (status >= 400) {
-        throw new Error(`Error update user is ${status}`);
-      }
-      return id;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
-);
-
 export const updateUser = createAsyncThunk(
-  `${SLICE_NAME}/updateUser`,
+  `${USERS_SLICE_NAME}/updateUser`,
   async (user, {rejectWithValue}) => {
     try {
-      const {status, data} = await api.put(`${SLICE_NAME}/${user.id}`, user);
+      const {status, data} = await api.put(`${USERS_SLICE_NAME}/${user.id}`, user);
       if (status >= 400) {
         throw new Error('Something went wrong with updating user');
       }
@@ -55,8 +40,23 @@ export const updateUser = createAsyncThunk(
   }
 )
 
+export const deleteUser = createAsyncThunk(
+  `${USERS_SLICE_NAME}/deleteUser`,
+  async (id, { rejectWithValue }) => {
+    try {
+      const { status } = await api.delete(`/${USERS_SLICE_NAME}/${id}`);
+      if (status >= 400) {
+        throw new Error(`Error update user is ${status}`);
+      }
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const usersSlice = createSlice({
-  name: SLICE_NAME,
+  name: USERS_SLICE_NAME,
   initialState,
   extraReducers: (builder) => {
     // Success

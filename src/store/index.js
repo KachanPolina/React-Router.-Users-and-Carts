@@ -1,9 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { logger } from "redux-logger";
+import { configureStore } from '@reduxjs/toolkit';
+import { logger } from 'redux-logger';
 import usersReducer from './slices/usersSlice';
 import cartsReducer from './slices/cartsSlice';
 import productsReducer from './slices/productsSlice';
-
 
 export default configureStore({
   reducer: {
@@ -11,5 +10,5 @@ export default configureStore({
     cartsList: cartsReducer,
     productsList: productsReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
-})
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+});

@@ -10,24 +10,25 @@ function UserForm() {
   const { id } = useParams();
   const currentUser = users.find((user) => user.id === Number(id));
   const navigate = useNavigate();
-
-  const onFormSubmit = (values) => {
-    const [firstName, lastName] = values.name.split(' ');
-    const updatedValues = {
-      ...values,
-      firstName: firstName,
-      lastName: lastName,
-    };
-
-    dispatch(updateUser(updatedValues));
-  };
-
+  
   const getInitialValues = () => {
     return {
       ...currentUser,
       name: `${currentUser.firstName} ${currentUser.lastName}`,
     };
   };
+
+  const onFormSubmit = (values) => {
+    const [firstName, lastName] = values.name.split(' ');
+    const updatedValues = {
+      ...values,
+      firstName,
+      lastName,
+    };
+
+    dispatch(updateUser(updatedValues));
+  };
+
 
   const goBack = () => navigate(-1);
 
@@ -54,6 +55,9 @@ function UserForm() {
           <div>
             <label htmlFor='phone'>Phone</label>
             <Field type='text' name='phone' id='phone' placeholder='Phone' />
+            <ErrorMessage name='phone'>
+              {(message) => <div>{message}</div>}
+            </ErrorMessage>
           </div>
         </fieldset>
         <fieldset id='contact' form='users-form'>

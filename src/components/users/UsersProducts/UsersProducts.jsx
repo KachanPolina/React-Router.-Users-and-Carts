@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsersProducts } from '../../../store/slices/productsSlice';
 import { useParams } from 'react-router-dom';
+import { getUsersProducts } from '../../../store/slices/productsSlice';
 
 function UsersProducts() {
   const dispatch = useDispatch();
@@ -14,7 +14,6 @@ function UsersProducts() {
 
   return (
     <div>
-      {console.log(products)}
       {products.map(({ id, title, price, quantity, thumbnail }) => {
         return (
           <li key={id}>

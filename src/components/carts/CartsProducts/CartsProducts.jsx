@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartsProducts } from '../../../store/slices/productsSlice';
 import { useParams } from 'react-router-dom';
+import { getCartsProducts } from '../../../store/slices/productsSlice';
 
 function CartsProducts() {
   const dispatch = useDispatch();

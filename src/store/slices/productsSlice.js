@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"; 
 import { setError, setStatus } from "../../service/reducerService";
 import api from '../../api';
-
-const SLICE_NAME = 'products';
+import { USERS_SLICE_NAME } from './slicesNames';
+import { CARTS_SLICE_NAME } from './slicesNames';
+import { PRODUCTS_SLICE_NAME } from './slicesNames';
 
 const initialState = {
   products: [],
@@ -11,10 +12,10 @@ const initialState = {
 }
 
 export const getCartsProducts = createAsyncThunk(
-  `${SLICE_NAME}/getCartsProducts`,
+  `${PRODUCTS_SLICE_NAME}/getCartsProducts`,
   async (cartId, { rejectWithValue }) => {
     try {
-      const { data, status } = await api.get(`/carts/${cartId}`);
+      const { data, status } = await api.get(`/${CARTS_SLICE_NAME}/${cartId}`);
       if (status >= 400) {
         throw new Error('Something went wrong with geting carts products');
       }
@@ -26,10 +27,10 @@ export const getCartsProducts = createAsyncThunk(
 );
 
 export const getUsersProducts = createAsyncThunk(
-  `${SLICE_NAME}/getUsersProducts`,
+  `${PRODUCTS_SLICE_NAME}/getUsersProducts`,
   async (userId, {rejectWithValue}) => {
     try {
-      const {data, status} = await api.get(`/carts/user/${userId}`) 
+      const {data, status} = await api.get(`/${CARTS_SLICE_NAME}/${USERS_SLICE_NAME}/${userId}`) 
       if (status >= 400) {
         throw new Error('Something went wrong with geting users products');
       }
@@ -42,24 +43,27 @@ export const getUsersProducts = createAsyncThunk(
 
 
 const cartsSlice = createSlice({
-  name: SLICE_NAME,
+  name: PRODUCTS_SLICE_NAME,
   initialState,
   extraReducers: (builder) => {
+    // Success
     builder.addCase(getCartsProducts.fulfilled, (state, { payload }) => {
       state.products = payload;
       state.status = 'fulfilled';
       state.error = null;
     });
-    builder.addCase(getCartsProducts.pending, setStatus);
-    builder.addCase(getCartsProducts.rejected, setError);
-
-
-    builder.addCase(getUsersProducts.fulfilled, (state, { payload }) => {
+     builder.addCase(getUsersProducts.fulfilled, (state, { payload }) => {
       state.products = payload;
       state.status = 'fulfilled';
       state.error = null;
     });
+
+    // Pending
+    builder.addCase(getCartsProducts.pending, setStatus);
     builder.addCase(getUsersProducts.pending, setStatus);
+    
+   // Reject
+    builder.addCase(getCartsProducts.rejected, setError);
     builder.addCase(getUsersProducts.rejected, setError);
 
   },

@@ -1,7 +1,4 @@
-import {
-  Routes,
-  Route,
-} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import UserForm from './UserForm/UserForm';
 import UserCarts from './UsersProducts/UsersProducts';
 import UsersList from './UsersList/UsersList';

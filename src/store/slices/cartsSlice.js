@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setError, setStatus } from '../../service/reducerService';
 import api from '../../api';
-
-const SLICE_NAME = 'carts';
+import { CARTS_SLICE_NAME } from './slicesNames';
 
 const initialState = {
   carts: [],
@@ -11,10 +10,10 @@ const initialState = {
 };
 
 export const getAllCarts = createAsyncThunk(
-  `${SLICE_NAME}/getAllCarts`,
+  `${CARTS_SLICE_NAME}/getAllCarts`,
   async (_, { rejectWithValue }) => {
     try {
-      const { data, status } = await api.get(`/${SLICE_NAME}`);
+      const { data, status } = await api.get(`/${CARTS_SLICE_NAME}`);
       if (status >= 400) {
         throw new Error('Something went wrong with getting users');
       }
@@ -26,7 +25,7 @@ export const getAllCarts = createAsyncThunk(
 );
 
 const cartsSlice = createSlice({
-  name: SLICE_NAME,
+  name: CARTS_SLICE_NAME,
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getAllCarts.fulfilled, (state, { payload }) => {
