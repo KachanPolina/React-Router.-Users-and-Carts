@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteUser, getAllUsers } from '../../../store/slices/usersSlice';
+import './UsersList.css';
 
 function UsersList() {
   const dispatch = useDispatch();
@@ -12,22 +15,24 @@ function UsersList() {
   }, [dispatch]);
 
   return (
-    <ul>
+    <ul className='users-list'>
       {users.map((user) => {
         return (
-          <li key={user.id}>
-            <Link to={`${user.id}`}>
-              <p className='user'>
-                {user.id} {user.firstName} {user.lastName}
+          // <div >
+            <li key={user.id} className='user-info'>
+              <Link to={`${user.id}`} className='user-name'>
+                <p>
+                  {user.id} {user.firstName} {user.lastName}
+                </p>
+              </Link>
+              <Link to={`edit/${user.id}`} className='user-buttons edit-button'>
+                <ModeEditIcon/>
+              </Link>
+              <p onClick={() => dispatch(deleteUser(user.id))} className='user-buttons delete-button'>
+                <DeleteIcon/>
               </p>
-            </Link>
-            <Link to={`edit/${user.id}`}>
-              <p>Edit</p>
-            </Link>
-            <p id='del' onClick={() => dispatch(deleteUser(user.id))}>
-              Delete
-            </p>
-          </li>
+            </li>
+          // </div>
         );
       })}
     </ul>
