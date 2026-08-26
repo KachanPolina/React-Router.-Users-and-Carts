@@ -1,0 +1,27 @@
+.carts-list {
+  width: 100%;
+  min-height: 300px;
+  list-style-type: none;
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  background-color: wheat;
+  padding: 20px 0;
+}
+
+.carts-list li {
+  padding: 10px;
+}
+
+.carts-list a:link {
+  color: #87612e; 
+  text-decoration: none;
+}
+
+.carts-list a:visited {
+  color: #6c757d; 
+}
+
+.carts-list a:hover {
+  color: #341e0b;
+}
