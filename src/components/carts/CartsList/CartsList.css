@@ -1,6 +1,6 @@
 .carts-list {
   width: 100%;
-  min-height: 300px;
+  min-height: calc(100vh - 80px - 64px - 56px);
   list-style-type: none;
   font-size: 30px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
