@@ -43,20 +43,9 @@ function App() {
       </div>
 
       <div className='navigation'>
-        {/* <ul>
-          <li>
-            <NavLink to='/'>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to='/carts'>Carts</NavLink>
-          </li>
-          <li>
-            <NavLink to='/users'>Users</NavLink>
-          </li>
-        </ul> */}
         <Box sx={{ width: '100%' }}>
           <BottomNavigation
-            // showLabels
+            showLabels
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);

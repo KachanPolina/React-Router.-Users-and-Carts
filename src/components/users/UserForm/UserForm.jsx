@@ -8,12 +8,18 @@ import { schemaUserForm } from '../../../utils/formValidationShema';
 import { updateUser } from '../../../store/slices/usersSlice';
 import './UserForm.css';
 import { Button, TextField } from '@mui/material';
+import { useGetCertainUserQuery } from '../../../store/api/usersApi';
+import { EMPTY_USER_FORM } from '../../../constants';
 
 function UserForm() {
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.usersList.users);
+  // const dispatch = useDispatch();
+  // const users = useSelector((state) => state.usersList.users);
   const { id } = useParams();
-  const currentUser = users.find((user) => user.id === Number(id));
+
+  const { data: currentUser = {} } = useGetCertainUserQuery(id);
+  // console.log(currentUser.firstName)
+
+  // const currentUser = users.find((user) => user.id === Number(id));
   const navigate = useNavigate();
 
   const getInitialValues = () => {
@@ -31,8 +37,35 @@ function UserForm() {
       lastName,
     };
 
-    dispatch(updateUser(updatedValues));
+    // dispatch(updateUser(updatedValues));
   };
+
+  // const getInitialValues = () => {
+  //   // return {
+  //   //   ...currentUser,
+  //   //   name: `${currentUser.firstName} ${currentUser.lastName}`,
+  //   // };
+
+  //   return {
+  //     ...currentUser,
+  //     name: currentUser?.firstName && currentUser?.lastName
+  //         ? `${currentUser.firstName} ${currentUser.lastName}`
+  //         : '',
+
+  //     email: currentUser?.email || '',
+  //     phone: currentUser?.phone || '',
+
+  //     // Глибокий захист для вкладеного об'єкта адреси
+  //     address: {
+  //       city: currentUser?.address?.city || '',
+  //       state: currentUser?.address?.state || '',
+  //       address: currentUser?.address?.address || '',
+  //     },
+
+  //     // Передаємо id та інші системні поля, якщо вони вже завантажились
+  //     id: currentUser?.id || '',
+  //   };
+  // };
 
   const goBack = () => navigate(-1);
 
@@ -160,9 +193,10 @@ function UserForm() {
   return (
     <div className='main-form-container'>
       <Formik
-        initialValues={getInitialValues()}
+        initialValues={getInitialValues() || EMPTY_USER_FORM}
         onSubmit={onFormSubmit}
         validationSchema={schemaUserForm}
+        enableReinitialize
       >
         {renderForm}
       </Formik>
