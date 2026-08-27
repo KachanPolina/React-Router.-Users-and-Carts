@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { USERS_SLICE_NAME } from '../slices/slicesNames';
-import { CARTS_SLICE_NAME } from '../slices/slicesNames';
-import { PRODUCTS_SLICE_NAME } from '../slices/slicesNames';
+import { USERS_SLICE_NAME } from '../slicesNames';
+import { CARTS_SLICE_NAME } from '../slicesNames';
+import { PRODUCTS_SLICE_NAME } from '../slicesNames';
 
 export const productsApi = createApi({
   reducerPath: `${PRODUCTS_SLICE_NAME}Api`,

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CARTS_SLICE_NAME } from '../slices/slicesNames';
+import { CARTS_SLICE_NAME } from '../slicesNames';
 
 export const cartsApi = createApi({
   reducerPath: `${CARTS_SLICE_NAME}Api`,

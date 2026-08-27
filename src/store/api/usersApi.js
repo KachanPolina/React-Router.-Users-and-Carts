@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { USERS_SLICE_NAME } from '../slices/slicesNames';
+import { USERS_SLICE_NAME } from '../slicesNames';
 
 export const usersApi = createApi({
   reducerPath: `${USERS_SLICE_NAME}Api`,
@@ -10,13 +10,7 @@ export const usersApi = createApi({
       transformResponse: (response) => response.users,
       providesTags: ['Users'],
     }),
-    // deleteUser: build.mutation({
-    //   query: (id) => ({
-    //     url: `users/${id}`,
-    //     method: 'DELETE',
-    //   }),
-    //   invalidatesTags: ['Users'],
-    // }),
+
     deleteUser: build.mutation({
       query: (id) => ({
         url: `users/${id}`,
@@ -37,17 +31,9 @@ export const usersApi = createApi({
         }
       },
     }),
-    updateUser: build.mutation({
-      query: (user) => ({
-        url: `users/${user.id}`,
-        method: 'PUT',
-        body: user,
-      }),
-      invalidatesTags: ['Users'],
-    }),
+    
     getCertainUser: build.query({
       query: (id) => `users/${id}`,
-      // transformResponse: (response) => response.users,
       providesTags: ['Users'],
     }),
   }),
@@ -55,7 +41,6 @@ export const usersApi = createApi({
 
 export const {
   useGetAllUsersQuery,
-  useUpdateUserMutation,
   useDeleteUserMutation,
   useGetCertainUserQuery
 } = usersApi;

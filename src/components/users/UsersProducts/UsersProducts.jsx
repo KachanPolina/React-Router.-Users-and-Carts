@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getUsersProducts } from '../../../store/slices/productsSlice';
-import '../../carts/CartsProducts/CartsProducts.css'
 import { useGetUsersProductsQuery } from '../../../store/api/productsApi';
+import '../../carts/CartsProducts/CartsProducts.css'
 
 function UsersProducts() {
-  // const dispatch = useDispatch();
-  // const products = useSelector((state) => state.productsList.products);
   const { id } = useParams();
-
   const { data: products = [] } = useGetUsersProductsQuery(id);
-
-  // useEffect(() => {
-  //   dispatch(getUsersProducts(id));
-  // }, [dispatch, id]);
 
   return (
     <ul className='carts-products'>
